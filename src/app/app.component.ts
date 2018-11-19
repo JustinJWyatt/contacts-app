@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import  { AppData } from './app';
+import { AppService } from './app/app.service';
 
 @Component({
   selector: 'app-root',
@@ -8,17 +9,15 @@ import  { AppData } from './app';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title: string = 'mean-contacts-app';
+  contacts: any;
 
-  someData: any;
-
-  constructor(private http: HttpClient){
+  constructor(private appService: AppService){
   
   }
 
   ngOnInit(){
-    this.http.get('https://jsonplaceholder.typicode.com/todos/1')
-             .toPromise()
-             .then(res => { this.someData = res });
+    this.appService.getContacts().subscribe(res => {
+      this.contacts = res;
+    })
   }
 }
